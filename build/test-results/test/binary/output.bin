@@ -1,0 +1,72 @@
+Config for Java Disk Mark 0.4
+readTest: false
+writeTest: true
+locationDir: /Users/mcohen
+multiFile: true
+autoRemoveData: false
+autoReset: true
+blockSequence: SEQUENTIAL
+showMaxMin: true
+numOfFiles: 25
+numOfBlocks: 128
+blockSizeKb: 2048
+
+*** starting new worker thread
+os: Mac OS X
+-Mark(WRITE): 1 bwMbSec: 414.685 avg: 414.685
++Mark(WRITE): 2 bwMbSec: 410.4 avg: 412.542
+-Mark(WRITE): 3 bwMbSec: 410.453 avg: 411.846
+-Mark(WRITE): 4 bwMbSec: 343.494 avg: 394.758
+-Mark(WRITE): 5 bwMbSec: 412.203 avg: 398.247
+-Mark(WRITE): 6 bwMbSec: 408.684 avg: 399.986
+-Mark(WRITE): 7 bwMbSec: 314.479 avg: 387.771
+-Mark(WRITE): 8 bwMbSec: 410.145 avg: 390.568
+-Mark(WRITE): 9 bwMbSec: 407.274 avg: 392.424
+.Mark(WRITE): 10 bwMbSec: 416.861 avg: 394.868
+.Mark(WRITE): 11 bwMbSec: 416.599 avg: 396.843
+.Mark(WRITE): 12 bwMbSec: 412.585 avg: 398.155
+-Mark(WRITE): 13 bwMbSec: 416.287 avg: 399.55
+.Mark(WRITE): 14 bwMbSec: 410.707 avg: 400.347
+.Mark(WRITE): 15 bwMbSec: 407.198 avg: 400.804
+.Mark(WRITE): 16 bwMbSec: 317.588 avg: 395.603
+.Mark(WRITE): 17 bwMbSec: 412.476 avg: 396.595
+.Mark(WRITE): 18 bwMbSec: 414.549 avg: 397.593
+.Mark(WRITE): 19 bwMbSec: 412.255 avg: 398.364
+.Mark(WRITE): 20 bwMbSec: 411.024 avg: 398.997
+.Mark(WRITE): 21 bwMbSec: 412.811 avg: 399.655
+.Mark(WRITE): 22 bwMbSec: 416.867 avg: 400.437
+.Mark(WRITE): 23 bwMbSec: 417.767 avg: 401.191
+,Mark(WRITE): 24 bwMbSec: 410.9 avg: 401.595
+.Mark(WRITE): 25 bwMbSec: 336.436 avg: 398.989
+³[EL Fine]: server: 2019-09-22 13:51:46.2--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--Configured server platform: org.eclipse.persistence.platform.server.NoServerPlatform
+æ[EL Config]: metadata: 2019-09-22 13:51:46.298--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The access type for the persistent class [class edu.touro.mco152.bm.persist.DiskRun] is set to [FIELD].
+î[EL Config]: metadata: 2019-09-22 13:51:46.313--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The alias name for the entity class [class edu.touro.mco152.bm.persist.DiskRun] is being defaulted to: DiskRun.
+Â[EL Config]: metadata: 2019-09-22 13:51:46.325--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [ioMode] is being defaulted to: IOMODE.
+Æ[EL Config]: metadata: 2019-09-22 13:51:46.328--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [numMarks] is being defaulted to: NUMMARKS.
+Â[EL Config]: metadata: 2019-09-22 13:51:46.328--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [runMin] is being defaulted to: RUNMIN.
+Â[EL Config]: metadata: 2019-09-22 13:51:46.328--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [runAvg] is being defaulted to: RUNAVG.
+Æ[EL Config]: metadata: 2019-09-22 13:51:46.329--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [diskInfo] is being defaulted to: DISKINFO.
+Ê[EL Config]: metadata: 2019-09-22 13:51:46.329--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [totalMarks] is being defaulted to: TOTALMARKS.
+Ê[EL Config]: metadata: 2019-09-22 13:51:46.329--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [blockOrder] is being defaulted to: BLOCKORDER.
+Ç[EL Config]: metadata: 2019-09-22 13:51:46.33--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [blockSize] is being defaulted to: BLOCKSIZE.
+Á[EL Config]: metadata: 2019-09-22 13:51:46.33--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [txSize] is being defaulted to: TXSIZE.
+Ç[EL Config]: metadata: 2019-09-22 13:51:46.33--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [numBlocks] is being defaulted to: NUMBLOCKS.
+Á[EL Config]: metadata: 2019-09-22 13:51:46.33--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [runMax] is being defaulted to: RUNMAX.
+Ç[EL Config]: metadata: 2019-09-22 13:51:46.33--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [startTime] is being defaulted to: STARTTIME.
+º[EL Config]: metadata: 2019-09-22 13:51:46.331--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [id] is being defaulted to: ID.
+Ä[EL Config]: metadata: 2019-09-22 13:51:46.331--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--The column name for element [endTime] is being defaulted to: ENDTIME.
+Â[EL Info]: 2019-09-22 13:51:46.435--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--EclipseLink, version: Eclipse Persistence Services - 2.7.4.v20190115-ad5b7c6b2a
+¹[EL Fine]: connection: 2019-09-22 13:51:47.091--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--Detected database platform: org.eclipse.persistence.platform.database.JavaDBPlatform
+²[EL Config]: connection: 2019-09-22 13:51:47.097--ServerSession(406464689)--Connection(1159061165)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--connecting(DatabaseLogin(
+	platform=>JavaDBPlatform
+	user name=> ""
+3	datasource URL=> "jdbc:derby:derbyDB;create=true"
+))
+¶[EL Config]: connection: 2019-09-22 13:51:47.099--ServerSession(406464689)--Connection(1078260117)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--Connected: jdbc:derby:derbyDB
+	User: APP
+8	Database: Apache Derby  Version: 10.13.1.1 - (1765088)
+K	Driver: Apache Derby Embedded JDBC Driver  Version: 10.13.1.1 - (1765088)
+Ý[EL Info]: connection: 2019-09-22 13:51:47.164--ServerSession(406464689)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--/file:/Users/mcohen/LCM/projCode/mco152a/build/classes/java/main/_jDiskMarkPU login successful
+Ð[EL Fine]: sql: 2019-09-22 13:51:47.393--ClientSession(41286173)--Connection(1078260117)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--INSERT INTO DiskRun (BLOCKORDER, BLOCKSIZE, DISKINFO, ENDTIME, IOMODE, NUMBLOCKS, NUMMARKS, RUNAVG, RUNMAX, RUNMIN, STARTTIME, TOTALMARKS, TXSIZE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+©	bind => [0, 2048, APPLE SSD SM0512F, 2019-09-22 13:51:46.001, 1, 128, 25, 398.9890543222719, 417.767130155635, 314.47939442314726, 2019-09-22 13:51:29.544, 0, 6553600]
+ª[EL Fine]: sql: 2019-09-22 13:51:47.435--ClientSession(41286173)--Connection(1078260117)--Thread(Thread[SwingWorker-pool-1-thread-1,5,main])--values IDENTITY_VAL_LOCAL()

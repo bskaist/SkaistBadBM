@@ -1,35 +1,53 @@
+/*
+ * Build file for BadBM, with standard directories, builds thin Jar
+ *
+ */
+
 plugins {
-   // Apply the java plugin to add support for Java
-   id 'java'
-   id 'java-library'
-   // Apply the application plugin to add support for building a CLI application
-   id 'application'
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
 repositories {
-   // Use jcenter for resolving dependencies.
-   // You can declare any Maven/Ivy/file repository here.
-   jcenter()
+    // Use jcenter for resolving dependencies.
+    jcenter()
 }
-dependencies {
-   // This dependency is used by the application.
-   implementation 'com.google.guava:guava:28.0-jre'
-   // Use JUnit test framework
-   testImplementation 'junit:junit:4.12'
-   // Charting api/runtime
-   api  group: 'org.jfree', name: 'jfreechart', version: '1.0.17'
-   // database/persistence
-   api group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
-   implementation group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa.modelgen', version: '2.4.2'
-   implementation group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.4'
-   // DBMS
-   implementation group: 'org.apache.derby', name: 'derby', version: '10.13.1.1'
+
+
+dependencies {	    
+
+    //Charting api/runtime
+    api  group: 'org.jfree', name: 'jfreechart', version: '1.0.17'
+    
+    // database/persistence
+    api group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+	implementation group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa.modelgen', version: '2.4.2'
+	implementation group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.4'
+    
+	implementation group: 'org.apache.derby', name: 'derby', version: '10.13.1.1'
+
+    // Junit-5 testing
+    testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
 }
-application {
-   // Define the main class for the application
-   mainClassName = 'App'
-}
+
 jar {
-   manifest {
-       attributes 'Main-Class': 'mco152.bm.App'
-   }
+  manifest {
+    attributes(
+      'Main-Class': 'edu.touro.mco152.bm.App'
+    )
+  }
+}
+
+sourceSets  {
+    // MJC this is need to make entity classes visible to the persistence scanner
+    sourceSets.main.output.resourcesDir = sourceSets.main.java.outputDir
+}
+
+
+test {
+    useJUnitPlatform()
 }
