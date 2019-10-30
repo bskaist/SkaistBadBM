@@ -1,49 +1,39 @@
-
 package edu.touro.mco152.bm;
 
-import static edu.touro.mco152.bm.BasicApp.KILOBYTE;
-import static edu.touro.mco152.bm.BasicApp.MEGABYTE;
-import static edu.touro.mco152.bm.BasicApp.blockSizeKb;
-import static edu.touro.mco152.bm.BasicApp.dataDir;
-import static edu.touro.mco152.bm.BasicApp.msg;
-import static edu.touro.mco152.bm.BasicApp.numOfBlocks;
-import static edu.touro.mco152.bm.BasicApp.numOfMarks;
-import static edu.touro.mco152.bm.BasicApp.testFile;
-import static edu.touro.mco152.bm.Marker.MarkType.READ;
-import static edu.touro.mco152.bm.Marker.MarkType.WRITE;
+import edu.touro.mco152.bm.persist.DiskRun;
+import edu.touro.mco152.bm.persist.EM;
+import edu.touro.mco152.bm.ui.Gui;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import javax.persistence.EntityManager;
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.swing.JOptionPane;
 
-import edu.touro.mco152.bm.persist.DiskRun;
-import edu.touro.mco152.bm.persist.EM;
+import static edu.touro.mco152.bm.App.*;
+import static edu.touro.mco152.bm.Marker.MarkType.READ;
+import static edu.touro.mco152.bm.Marker.MarkType.WRITE;
 
 /**
- * Basic implementation of the Worker interface that doesn't rely onr the GUI
+ * Implementation of the Worker interface
+ * Uses SwingWorker to operate and access to the GUI
  * Thread running the disk benchmarking. only one of these threads can run at
  * once.
  */
-public class DiskWorker implements Worker {
-    private volatile int progress;
-    List<DiskMark> wMarkList = new ArrayList<>();
-    List<DiskMark> rMarkList = new ArrayList<>();
+public class SwingDiskWorker extends SwingWorker<Boolean, DiskMark> implements Worker  {
 
 
-    private final PropertyChangeSupport propertyChangeSupport;
 
-    public DiskWorker() {
-        propertyChangeSupport = new PropertyChangeSupport(this);
+    @Override
+    protected Boolean doInBackground() throws Exception {
+
+        tester();
+        return true;
     }
 
     private void testRead(DiskRun run) {
@@ -64,16 +54,18 @@ public class DiskWorker implements Worker {
             }
         }
 
-        DiskMark wMark, rMark;
+        DiskMark rMark;
 
+        Gui.updateLegend();
 
         if (App.autoReset == true) {
             App.resetTestData();
+            Gui.resetTestData();
         }
 
         int startFileNum = App.nextMarkNumber;
 
-        for (int m=startFileNum; m<startFileNum+App.numOfMarks; m++) {
+        for (int m=startFileNum; m<startFileNum+App.numOfMarks && !isCancelled(); m++) {
 
             if (App.multiFile == true) {
                 testFile = new File(dataDir.getAbsolutePath()
@@ -98,6 +90,7 @@ public class DiskWorker implements Worker {
                         rUnitsComplete++;
                         unitsComplete = rUnitsComplete + wUnitsComplete;
                         percentComplete = (float)unitsComplete/(float)unitsTotal * 100f;
+                        setProgress((int)percentComplete);
                     }
                 }
             } catch (FileNotFoundException ex) {
@@ -113,8 +106,7 @@ public class DiskWorker implements Worker {
             msg("m:"+m+" READ IO is "+rMark.getBwMbSec()+" MB/s    "
                     + "(MBread "+mbRead+" in "+sec+" sec)");
             App.updateMetrics(rMark);
-            rMarkList.add(rMark);
-            process(rMarkList);
+            publish(rMark);
 
             run.setRunMax(rMark.getCumMax());
             run.setRunMin(rMark.getCumMin());
@@ -145,20 +137,22 @@ public class DiskWorker implements Worker {
 
         DiskMark wMark, rMark;
 
+        Gui.updateLegend();
+
         if (App.autoReset == true) {
             App.resetTestData();
-
+            Gui.resetTestData();
         }
 
         int startFileNum = App.nextMarkNumber;
 
 
-        if (BasicApp.multiFile == false) {
+        if (App.multiFile == false) {
             testFile = new File(dataDir.getAbsolutePath()+File.separator+"testdata.jdm");
         }
-        for (int m=startFileNum; m<startFileNum+App.numOfMarks; m++) {
+        for (int m=startFileNum; m<startFileNum+App.numOfMarks && !isCancelled(); m++) {
 
-            if (BasicApp.multiFile == true) {
+            if (App.multiFile == true) {
                 testFile = new File(dataDir.getAbsolutePath()
                         + File.separator+"testdata"+m+".jdm");
             }
@@ -184,6 +178,7 @@ public class DiskWorker implements Worker {
                         wUnitsComplete++;
                         unitsComplete = rUnitsComplete + wUnitsComplete;
                         percentComplete = (float)unitsComplete/(float)unitsTotal * 100f;
+                        setProgress((int)percentComplete);
                     }
                 }
             } catch (FileNotFoundException ex) {
@@ -200,8 +195,7 @@ public class DiskWorker implements Worker {
                     + "("+Util.displayString(mbWritten)+ "MB written in "
                     + Util.displayString(sec)+" sec)");
             App.updateMetrics(wMark);
-            wMarkList.add(wMark);
-            process(wMarkList);
+            publish(wMark);
 
             run.setRunMax(wMark.getCumMax());
             run.setRunMin(wMark.getCumMin());
@@ -216,15 +210,23 @@ public class DiskWorker implements Worker {
         run.setNumBlocks(App.numOfBlocks);
         run.setBlockSize(App.blockSizeKb);
         run.setTxSize(App.targetTxSizeKb());
-//        run.setDiskInfo(Util.getDiskInfo(dataDir));
+        run.setDiskInfo(Util.getDiskInfo(dataDir));
 
         msg("disk info: ("+ run.getDiskInfo()+")");
 
+        Gui.chartPanel.getChart().getTitle().setVisible(true);
+        Gui.chartPanel.getChart().getTitle().setText(run.getDiskInfo());
     }
 
     @Override
     public void process(List<DiskMark> markList) {
-
+        markList.stream().forEach((m) -> {
+            if (m.type==DiskMark.MarkType.WRITE) {
+                Gui.addWriteMark(m);
+            } else {
+                Gui.addReadMark(m);
+            }
+        });
     }
 
     @Override
@@ -243,10 +245,17 @@ public class DiskWorker implements Worker {
             em.persist(run);
             em.getTransaction().commit();
 
+            Gui.runPanel.addRun(run);
         }
         // try renaming all files to clear catch
-        if (App.readTest && App.writeTest) {
-
+        if (App.readTest && App.writeTest && !isCancelled()) {
+            JOptionPane.showMessageDialog(Gui.mainFrame,
+                    "For valid READ measurements please clear the disk cache by\n" +
+                            "using the included RAMMap.exe or flushmem.exe utilities.\n" +
+                            "Removable drives can be disconnected and reconnected.\n" +
+                            "For system drives use the WRITE and READ operations \n" +
+                            "independantly by doing a cold reboot after the WRITE",
+                    "Clear Disk Cache Now",JOptionPane.PLAIN_MESSAGE);
         }
 
         if (App.readTest) {
@@ -261,20 +270,18 @@ public class DiskWorker implements Worker {
             em.persist(run);
             em.getTransaction().commit();
 
+            Gui.runPanel.addRun(run);
         }
         App.nextMarkNumber += App.numOfMarks;
 
     }
 
-
-    public final void addPropertyChangeListener(PropertyChangeListener listener) {
-        getPropertyChangeSupport().addPropertyChangeListener(listener);
+    @Override
+    public void done() {
+        if (App.autoRemoveData) {
+            Util.deleteDirectory(dataDir);
+        }
+        App.state = App.State.IDLE_STATE;
+        Gui.mainFrame.adjustSensitivity();
     }
-
-    public final PropertyChangeSupport getPropertyChangeSupport() {
-        return propertyChangeSupport;
-    }
-
-
-
 }

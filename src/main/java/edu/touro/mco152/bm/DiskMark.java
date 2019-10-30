@@ -6,23 +6,18 @@ import java.text.DecimalFormat;
 /**
  *
  */
-public class DiskMark {
-    
-    static DecimalFormat df = new DecimalFormat("###.###");
-    
-    public enum MarkType { READ,WRITE; }
-    
+public class DiskMark extends Marker{
+
     DiskMark(MarkType type) {
-        this.type=type;
+		super(type);
+		this.type=type;
     }
-    
-    MarkType type;
-    private int markNum = 0;       // x-axis
+
     private double bwMbSec = 0;    // y-axis
     private double cumMin = 0;
     private double cumMax = 0;
     private double cumAvg = 0;
-    
+
     @Override
     public String toString() {
         return "Mark("+type+"): "+getMarkNum()+" bwMbSec: "+getBwMbSecAsString()+" avg: "+getAvgAsString();
@@ -43,14 +38,6 @@ public class DiskMark {
     String getAvgAsString() {
         return df.format(getCumAvg());
     }
-
-	public int getMarkNum() {
-		return markNum;
-	}
-
-	public void setMarkNum(int markNum) {
-		this.markNum = markNum;
-	}
 
 	public double getBwMbSec() {
 		return bwMbSec;
