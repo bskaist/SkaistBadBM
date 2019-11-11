@@ -1,4 +1,7 @@
 
+/**
+ * The only package, it contains the all of the code
+ */
 package edu.touro.mco152.bm;
 
 import java.beans.PropertyChangeEvent;
@@ -24,7 +27,8 @@ import edu.touro.mco152.bm.ui.SelectFrame;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * Primary class for global variables.
+ * The main class for global variables
+ * and the class that contains the entirety of the processing
  */
 public class App {
     
@@ -112,7 +116,7 @@ public class App {
     }
     
     /**
-     * Initialize the GUI Application.
+     * Starts up the GUI Application.
      */
     public static void init() {
         Gui.mainFrame = new MainFrame();
@@ -225,7 +229,9 @@ public class App {
             Gui.runPanel.addRun(run);
         });
     }
-    
+    /**
+     * Clears all the saved runs
+     */
     public static void clearSavedRuns() {
         DiskRun.deleteAll();
         
