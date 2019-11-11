@@ -4,7 +4,8 @@ package edu.touro.mco152.bm;
 import java.text.DecimalFormat;
 
 /**
- *
+ *The specific type of object that is used to save onto the disk
+ * in order to benchmark
  */
 public class DiskMark {
     
@@ -22,7 +23,10 @@ public class DiskMark {
     private double cumMin = 0;
     private double cumMax = 0;
     private double cumAvg = 0;
-    
+
+	/**
+	 * Turns diskmarker into a string
+	 */
     @Override
     public String toString() {
         return "Mark("+type+"): "+getMarkNum()+" bwMbSec: "+getBwMbSecAsString()+" avg: "+getAvgAsString();
