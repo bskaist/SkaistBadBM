@@ -26,40 +26,40 @@ public class DiskWorkerBruteforceTest {
      * the DiskWorket thread is able to run to completion and give back a return code
      * TODO Consider whether calling any other swing status methods in interval between execute() and get would be a good test.
      */
-    @Test
-    void sanityTestPrevSettings()
-    {
-        Boolean  tResult = null;    // return value to be placed here
-
-        // Arrange test based on settings of properties (indeterminate) from last run
-        setupDefaultAsPerProperties();
-        DiskWorker worker = new DiskWorker();
-
-        // Act by invoking the Swing execute which will call DiskWorker on separate thread
-        worker.execute();
-
-        // above line starts a separate thread, we have to wait for its completion
-        try {
-            tResult = worker.get();     // DiskWorker completed, gave a return code
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            fail("get() while wait for DiskWorker was interrupted", e);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            fail("get() while wait for DiskWorker failed", e);
-        }
-
-         /**
-         * Right-BICEP - RIGHT.
-         */
-        // Assert: If DiskWorker fully executed, it should return True
-        assertTrue(tResult);
-    }
-
-
-    /**
-     * Bruteforce setup of static classes/fields to allow DiskWorker to run.
-     */
+//    @Test
+//    void sanityTestPrevSettings()
+//    {
+//        Boolean  tResult = null;    // return value to be placed here
+//
+//        // Arrange test based on settings of properties (indeterminate) from last run
+//        setupDefaultAsPerProperties();
+//        DiskWorker worker = new DiskWorker();
+//
+//        // Act by invoking the Swing execute which will call DiskWorker on separate thread
+//        worker.execute();
+//
+//        // above line starts a separate thread, we have to wait for its completion
+//        try {
+//            tResult = worker.get();     // DiskWorker completed, gave a return code
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            fail("get() while wait for DiskWorker was interrupted", e);
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//            fail("get() while wait for DiskWorker failed", e);
+//        }
+//
+//         /**
+//         * Right-BICEP - RIGHT.
+//         */
+//        // Assert: If DiskWorker fully executed, it should return True
+//        assertTrue(tResult);
+//    }
+//
+//
+//    /**
+//     * Bruteforce setup of static classes/fields to allow DiskWorker to run.
+//     */
     private void setupDefaultAsPerProperties()
     {
 
